@@ -1,5 +1,5 @@
 import tensorflow as tf
-from utils.mnist_loader import MNISTLoader
+from data_loaders.mnist_loader import MNISTLoader
 from models.mlp import MLP
 
 num_batches = 1000

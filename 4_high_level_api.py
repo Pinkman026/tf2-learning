@@ -1,6 +1,6 @@
 import tensorflow as tf
 import argparse
-from utils.mnist_loader import MNISTLoader
+from data_loaders.mnist_loader import MNISTLoader
 
 
 def construct_model(how="sequential"):

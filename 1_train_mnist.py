@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from utils.mnist_loader import MNISTLoader
+from data_loaders.mnist_loader import MNISTLoader
 from models.mlp import MLP
 from models.cnn import CNN
 import argparse

@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from utils.text_loader import TextLoader
+from data_loaders.text_loader import TextLoader
 from models.rnn import RNN
 
 
