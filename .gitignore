@@ -1,0 +1,7 @@
+.ipynb_checkpoints
+.idea
+*.pyc
+save
+tensorboard
+logs
+data
