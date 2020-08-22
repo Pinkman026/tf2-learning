@@ -1,31 +1,33 @@
 # tf2 学习笔记
 
+学习过程中的记录，方便后面查看。
+
 结合官方教程使用：https://tf.wiki/zh_hans/mlstudyjam2nd.html
 
 一些函数记录:
 
-* tf.keras.layers.Flatten():   # Flatten层将除第一维（batch_size）展平
-* with tf.GradientTape() as tape:     # 在 tf.GradientTape() 的上下文内，所有计算步骤都会被记录以用于求导
-* tf.keras.layers.Dense(units, activation, use_bias, kernel_initializer
-* tf.keras.losses.sparse_categorical_crossentropy :交叉熵损失函数
-* categorical_crossentropy: one hot 交叉熵损失函数
-* tf.keras.metrics.SparseCategoricalAccuracy 模型评估，batch的形式，最后 .result() 得到最终结果
+* `tf.keras.layers.Flatten()`:   # `Flatten`层将除第一维（`batch_size`）展平
+* `with tf.GradientTape() as tape`:     # 在 `tf.GradientTape()` 的上下文内，所有计算步骤都会被记录以用于求导
+* `tf.keras.layers.Dense(units, activation, use_bias, kernel_initializer`
+* `tf.keras.losses.sparse_categorical_crossentropy` :交叉熵损失函数
+* `categorical_crossentropy`: one hot 交叉熵损失函数
+* `tf.keras.metrics.SparseCategoricalAccuracy` 模型评估，batch的形式，最后 .result() 得到最终结果
 * self.conv1 = tf.keras.layers.Conv2D(
             filters=32,             # 卷积层神经元（卷积核）数目
             kernel_size=[5, 5],     # 感受野大小
             padding='same',         # padding策略（vaild 或 same）
             activation=tf.nn.relu   # 激活函数
 	)
-* tf.keras.applications. 下面有很多预训练的网络结构，包括Xception，ResNet，Inception，MobileNet，DenseNet，EfficientNet等，
-详细参考：https://keras.io/api/applications/ ，变量主要有以下几个
-    * input_shape: 	输入张量的形状（不含第一维的 Batch），大多默认为 224 × 224 × 3 。一般而言，模型对输入张量的大小有下限，长和宽至少为 32 × 32 或 75 × 75 ；
-    * include_top ：在网络的最后是否包含全连接层，默认为 True ；
-    * weights ：预训练权值，默认为 'imagenet' ，即为当前模型载入在 ImageNet 数据集上预训练的权值。如需随机初始化变量可设为 None ；
-    * classes ：分类数，默认为 1000。修改该参数需要 include_top 参数为 True 且 weights 参数为 None 。
-* tf.shape(inputs): 可以获得更多的信息
+* `tf.keras.applications.` 下面有很多预训练的网络结构，包括 `Xception`，`ResNet`，`Inception，MobileNet`，`DenseNet`，`EfficientNet`等，
+`详细参考：https://keras.io/api/applications/ ，变量主要有以下几个
+    * `input_shape`: 	输入张量的形状（不含第一维的 Batch），大多默认为 224 × 224 × 3 。一般而言，模型对输入张量的大小有下限，长和宽至少为 32 × 32 或 75 × 75 ；
+    * `include_top` ：在网络的最后是否包含全连接层，默认为 True ；
+    * `weights` ：预训练权值，默认为 `imagenet` ，即为当前模型载入在 ImageNet 数据集上预训练的权值。如需随机初始化变量可设为 None ；
+    * `classes` ：分类数，默认为 1000。修改该参数需要 `include_top` 参数为 `True` 且 `weights` 参数为 `None` 。
+* `tf.shape(inputs)`: 可以获得更多的信息
 * 查看模型参数信息，先给模型一个输入，然后打印信息
-    * model.build(input_shape=(None, 28 * 28))
-    * model.summary()
+    * `model.build(input_shape=(None, 28 * 28))`
+    * `model.summary()`
 
 ## 在mnist上训练
 
@@ -79,15 +81,15 @@ class RNN(tf.keras.Model):
 
 ## 模型保存和加载
 
-* checkpoint = tf.train.Checkpoint(myAwesomeModel=model) 实例化保存
-* checkpoint.save('./save/model.ckpt') 保存
-* checkpoint.restore(tf.train.latest_checkpoint('./save')) 读取
-* tf.train.latest_checkpoint(save_path) 返回最新保存的模型路径
-* checkpoint 也支持图执行模式
-* 通过 tf.train.CheckpointManager 来定义保存属性
-    * manager = tf.train.CheckpointManager(checkpoint, directory='./save', checkpoint_name='model.ckpt', max_to_keep=k)
-    * 使用CheckpointManager保存模型参数到文件并自定义编号
-    * path = manager.save(checkpoint_number=batch_index)
+* `checkpoint = tf.train.Checkpoint(myAwesomeModel=model)` 实例化保存
+* `checkpoint.save('./save/model.ckpt')` 保存
+* `checkpoint.restore(tf.train.latest_checkpoint('./save'))` 读取
+* `tf.train.latest_checkpoint(save_path)` 返回最新保存的模型路径
+* `checkpoint` 也支持图执行模式
+* 通过 `tf.train.CheckpointManager` 来定义保存属性
+    * `manager = tf.train.CheckpointManager(checkpoint, directory='./save', checkpoint_name='model.ckpt', max_to_keep=k)`
+    * 使用 `CheckpointManager` 保存模型参数到文件并自定义编号
+    * `path = manager.save(checkpoint_number=batch_index)`
     
 myAwesomeModel 是待保存的模型 model 所取的任意键名。注意，在恢复变量的时候，还将使用这一键名。
 代码示例：
@@ -110,12 +112,12 @@ checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 从文件恢复模
 
 ## TensorBoard 训练过程可视化
 
-* 实例化writer：summary_writer = tf.summary.create_file_writer('./tensorboard')
-* 开启写入环境：with summary_writer.as_default():
+* 实例化 `writer：summary_writer = tf.summary.create_file_writer('./tensorboard')`
+* 开启写入环境：`with summary_writer.as_default()`:
 * 写入文件
-    * 标量：tf.summary.scalar(name, tensor, step=batch_index)
-    * 图像：tf.summary.image('Traning sample:', sample_img, step=0)  # sample_img = tf.reshape(sample_img, [1, 28, 28, 1])
-* 开启：tensorboard --logdir=./tensorboard
+    * 标量：`tf.summary.scalar(name, tensor, step=batch_index)`
+    * 图像：`tf.summary.image('Traning sample:', sample_img, step=0)  # sample_img = tf.reshape(sample_img, [1, 28, 28, 1])`
+* 开启：`tensorboard --logdir=./tensorboard`
 
 关键代码
 
@@ -139,14 +141,14 @@ with summary_writer.as_default():
 
 ## tf.data
 
-* 基础用法：dataset = tf.data.Dataset.from_tensor_slices((X, Y))，X Y 可以是tensor，也可以是numpy数组
-* 对于大数据集，可以处理成TFRecord格式，然后使用tf.data.TFRocordDataset()载入
+* 基础用法：`dataset = tf.data.Dataset.from_tensor_slices((X, Y))`，X Y 可以是tensor，也可以是numpy数组
+* 对于大数据集，可以处理成TFRecord格式，然后使用 `tf.data.TFRocordDataset()` 载入
 * tf.data.Dataset 常用函数
-    * map(f, num_parallel_calls=2) ：对数据集中的每个元素应用函数 f （函数输入是x和y，输出也是x和y），得到一个新的数据集（这部分往往结合 tf.io 进行读写和解码文件， tf.image 进行图像处理）；可以并行处理
-    * shuffle(buffer_size) ：将数据集打乱
-    * batch(batch_size)：将数据集分成批次，即对每 batch_size 个元素，使用 tf.stack() 在第 0 维合并，成为一个元素；
-    * repeat()：重复数据中的元素
-    * prefetch(buffer_size=tf.data.experimental.AUTOTUNE)：用法和shuffle类似，预先加载到内存，buffer_size可以自动设置
+    * `map(f, num_parallel_calls=2)` ：对数据集中的每个元素应用函数 f （函数输入是x和y，输出也是x和y），得到一个新的数据集（这部分往往结合 tf.io 进行读写和解码文件， tf.image 进行图像处理）；可以并行处理
+    * `shuffle(buffer_size)` ：将数据集打乱
+    * `batch(batch_size)`：将数据集分成批次，即对每 batch_size 个元素，使用 tf.stack() 在第 0 维合并，成为一个元素；
+    * `repeat()`：重复数据中的元素
+    * `prefetch(buffer_size=tf.data.experimental.AUTOTUNE)`：用法和shuffle类似，预先加载到内存，buffer_size可以自动设置
 
 使用dataset搭配keras接口：
 
